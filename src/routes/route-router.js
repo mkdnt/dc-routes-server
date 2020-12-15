@@ -1,101 +1,79 @@
 const express = require('express')
-const routes = require('./store')
-const logger = require('./logger')
+const RoutesService = require('./routes-service')
+const xss = require('xss')
 
 const routeRouter = express.Router()
-const bodyParser = express.json() 
+const jsonParser = express.json()
 
 routeRouter
-    .route('/route')
-    .get((req, res) => {
-        res
-        .json(routes);
+    .route('/')
+    .get((req, res, next) => {
+    RoutesService.getAllRoutes(req.app.get('db'))
+        .then(routes => {
+        res.json(routes)
         })
-    .post(bodyParser, (req, res) => {
-        const {route_name, dc_area, distance, difficulty, route_type, route_description} = req.body;
-
-        if (!route_name) {
-            logger.error('Name is required');
-            return res
-                .status(400)
-                .send('Invalid data. Name is required.')
-        }
-        if (!dc_area) {
-            logger.error('DC area is required');
-            return res
-                .status(400)
-                .send('Invalid data. DC area is required.')
-        }
-        if (!distance) {
-            logger.error('Distance is required');
-            return res
-                .status(400)
-                .send('Invalid data. Distance is required.')
-        }
-        if (!difficulty) {
-            logger.error('Difficulty is required');
-            return res
-                .status(400)
-                .send('Invalid data. Difficulty is required.')
-        }
-        if (!route_type) {
-            logger.error('Type is required');
-            return res
-                .status(400)
-                .send('Invalid data. Type is required.')
-        }
-        if (!route_description) {
-            logger.error('Description is required');
-            return res
-                .status(400)
-                .send('Invalid data. Description is required.')
-        }
-
-        const route = {
-            id,
-            route_name,
-            dc_area,
-            distance,
-            difficulty,
-            route_type,
-            route_description
-        }
-
-        routes.push(route)
-        logger.info(`Route with id ${id} created`)
-        res
-            .status(201)
-            .location(`http://localhost:9000/route/${id}`)
-            .json(route)
+        .catch(next)
     })
+    .post(jsonParser, (req, res, next) => {
+        const {route_name, dc_area, distance, difficulty, route_type, route_description} = req.body
+        const newRoute = {route_name, dc_area, distance, difficulty, route_type, route_description}
+
+        for (const [key, value] of Object.entries(newRoute)) {
+            if (value == null) {
+                return res.status(400).json({
+                    error: { message: `Missing '${key}' in request body`}
+                })
+            }
+        }
+
+        RoutesService.insertRoute(
+            req.app.get('db'),
+            newRoute
+        )
+            .then(route => {
+            res
+                .status(201)
+                .location(`/route/${route.id}`)
+                .json(route)
+            })
+            .catch(next)
+        })
 
 routeRouter
-    .route('/route/:id')
-    .get((req, res) => {
-        const { id } = req.params;
-        const route = routes.find(r => r.id === id);
-
-        if (!route) {
-            logger.error(`Card with id ${id} not found.`);
-            return res
-                .status(404)
-                .send('Route Not Found');
-        }
-
-        res.json(route);
+    .route('/:route_id')
+    .all((req, res, next) => {
+        RoutesService.getById(req.app.get('db'), req.params.route_id)
+            .then(route => {
+            if (!route) {
+                return res.status(404).json({
+                error: { message: `Route doesn't exist` }
+                })
+            }
+            res.route = route
+            next()
+            })
+            .catch(next)
+            })
+    .get((req, res, next) => {
+        res.json({
+                id: route.id,
+                route_name: xss(route.route_name),
+                dc_area: route.dc_area,
+                distance: route.distance,
+                difficulty: route.difficulty,
+                route_type: route.route_type,
+                route_description: xss(route.route_description)
         })
-    .delete((req, res) => {
-        const { id } = req.params;
-        const index = routes.findIndex(r => r.id == id)
-
-        if (index === -1) {
-            return res
-            .status(404)
-            .send('Route Not Found')
-        }
-
-        routes.splice(index, 1);
-        res.send('Route Deleted')
-        })
+    })        
+    .delete((req, res, next) => {
+        RoutesService.deleteRoute(
+            req.app.get('db'),
+            req.params.route_id
+        )
+            .then(() => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 
 module.exports = routeRouter
