@@ -3,7 +3,7 @@ function makeRoutesArray() {
             {
             id: 1,
             route_name: 'Test Route 1',
-            dc_area: 'Northeast DC',
+            dc_area: 'Northeast',
             distance: 8,
             difficulty: 'Medium',
             route_type: 'City Streets',
@@ -12,7 +12,7 @@ function makeRoutesArray() {
         {
             id: 2,
             route_name: 'Test Route 2',
-            dc_area: 'Northwest DC',
+            dc_area: 'Northwest',
             distance: 4,
             difficulty: 'Low',
             route_type: 'Residential',
@@ -21,7 +21,7 @@ function makeRoutesArray() {
         {
             id: 3,
             route_name: 'Test Route 3',
-            dc_area: 'Southeast DC',
+            dc_area: 'Southeast',
             distance: 10,
             difficulty: 'High',
             route_type: 'Trail/Path',

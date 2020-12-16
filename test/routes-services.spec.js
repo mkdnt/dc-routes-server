@@ -1,5 +1,5 @@
 
-const RoutesService = require('../../src/routes/routes-service')
+const RoutesService = require('../src/routes/routes-service')
 const knex = require('knex')
 const { expect } = require('chai')
 
@@ -9,7 +9,7 @@ describe(`Routes service object`, function() {
         {
             id: 1,
             route_name: 'Test Route 1',
-            dc_area: 'Northeast DC',
+            dc_area: 'Northeast',
             distance: 8,
             difficulty: 'Medium',
             route_type: 'City Streets',
@@ -18,7 +18,7 @@ describe(`Routes service object`, function() {
         {
             id: 2,
             route_name: 'Test Route 2',
-            dc_area: 'Northwest DC',
+            dc_area: 'Northwest',
             distance: 4,
             difficulty: 'Low',
             route_type: 'Residential',
@@ -27,7 +27,7 @@ describe(`Routes service object`, function() {
         {
             id: 3,
             route_name: 'Test Route 3',
-            dc_area: 'Southeast DC',
+            dc_area: 'Southeast',
             distance: 10,
             difficulty: 'High',
             route_type: 'Trail/Path',
@@ -78,7 +78,14 @@ describe(`Routes service object`, function() {
                     })
                 })
         })
-
+/*
+        it(`getByDcArea() resolves a route by dc_area from 'routes' table`, () => {
+            const dc_area = 'Northeast'
+            const expectedRoutes = testRoutes.filter(route => route.dc_area == dc_area)
+            return RoutesService.getByDcArea(db, dc_area)
+                .then(actual => expect(actual).to.eql(expectedRoutes))
+        })
+*/
         it(`deleteRoute() removes a route by id from 'routes table`, () => {
             const routeId = 3
             return RoutesService.deleteRoute(db, routeId)
@@ -89,7 +96,7 @@ describe(`Routes service object`, function() {
                 })
         })
 
-        it(`updateRoute() updates a route from teh 'routes' table`, () => {
+        it(`updateRoute() updates a route from the 'routes' table`, () => {
             const idOfRouteToUpdate = 3
             const newRouteData = {
                 route_name: 'Updated Route',

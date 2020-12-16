@@ -1,10 +1,10 @@
 const { expect } = require('chai')
 const knex = require('knex')
 const supertest = require('supertest')
-const app = require('../../src/app')
+const app = require('../src/app')
 const { makeRoutesArray } = require('./routes.fixtures')
 
-describe.only('Routes Endpoints', function() {
+describe('Routes Endpoints', function() {
     let db
 
     before('make knex instance', () => {
@@ -79,7 +79,7 @@ describe.only('Routes Endpoints', function() {
             const maliciousRoute = {
                 id: 911,
                 route_name: `Malicious attack from <script>alert("xss");</script>`,
-                dc_area: 'Northeast DC',
+                dc_area: 'Northeast',
                 distance: 8,
                 difficulty: 'High',
                 route_type: 'Trail/Path',
@@ -103,12 +103,30 @@ describe.only('Routes Endpoints', function() {
             })
         })
     })
+/*
+    describe(`GET /api/route/:dc_area`, () => {
+        const testRoutes = makeRoutesArray()
 
+            beforeEach('insert routes', () => {
+                return db
+                    .into('routes')
+                    .insert(testRoutes)
+            })
+
+        it(`responds with 200 and routes from the specified dc_area`, () => {
+            const dc_area = 'Northeast'
+            const expectedRoutes = testRoutes.filter(route => route.dc_area == dc_area)
+            return supertest(app)
+                .get(`/api/route/${dc_area}`)
+                .expect(200, expectedRoutes)
+        })
+    })
+*/
     describe(`POST /api/route`, () => {
         it(`creates a route, responding with 201 and the new route`, function() {
             const newRoute = {
                 route_name: 'Test Route',
-                dc_area: 'Southeast DC',
+                dc_area: 'Southeast',
                 distance: 10,
                 difficulty: 'High',
                 route_type: 'Trail/Path',
@@ -140,7 +158,7 @@ describe.only('Routes Endpoints', function() {
         requiredFields.forEach(field => {
             const newRoute = {
                 route_name: 'Test Route',
-                dc_area: 'Southeast DC',
+                dc_area: 'Southeast',
                 distance: 10,
                 difficulty: 'High',
                 route_type: 'Trail/Path',
@@ -219,7 +237,7 @@ describe.only('Routes Endpoints', function() {
                 const idToUpdate = 2
                 const updateRoute = {
                     route_name: 'Updated Route',
-                    dc_area: 'Southeast DC',
+                    dc_area: 'Southeast',
                     distance: 10,
                     difficulty: 'High',
                     route_type: 'Trail/Path',
