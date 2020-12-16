@@ -1,5 +1,5 @@
-/*
-const RoutesService = require('../src/routes/routes-service')
+
+const RoutesService = require('../../src/routes/routes-service')
 const knex = require('knex')
 const { expect } = require('chai')
 
@@ -142,4 +142,3 @@ describe(`Routes service object`, function() {
         })
     })
 })
-*/
