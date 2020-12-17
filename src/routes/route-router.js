@@ -39,9 +39,9 @@ routeRouter
             })
             .catch(next)
         })
-/*
+
 routeRouter
-    .route('/:dc_area')
+    .route('/byarea/:dc_area')
     .get((req, res, next) => {
         RoutesService.getByDcArea(req.app.get('db'), req.params.dc_area)
         .then(routes => {
@@ -49,7 +49,7 @@ routeRouter
         })
         .catch(next)
     })
-*/
+
 routeRouter
     .route('/:route_id')
     .all((req, res, next) => {

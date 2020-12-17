@@ -16,11 +16,11 @@ const RoutesService = {
     getById(knex, id) {
         return knex.from('routes').select('*').where('id', id).first()
     },
-/*
+
     getByDcArea(knex, dc_area) {
         return knex.from('routes').select('*').where('dc_area', dc_area)
     },
-*/
+
     deleteRoute(knex, id) {
         return knex('routes')
             .where({id})

@@ -78,14 +78,14 @@ describe(`Routes service object`, function() {
                     })
                 })
         })
-/*
+
         it(`getByDcArea() resolves a route by dc_area from 'routes' table`, () => {
             const dc_area = 'Northeast'
             const expectedRoutes = testRoutes.filter(route => route.dc_area == dc_area)
             return RoutesService.getByDcArea(db, dc_area)
                 .then(actual => expect(actual).to.eql(expectedRoutes))
         })
-*/
+
         it(`deleteRoute() removes a route by id from 'routes table`, () => {
             const routeId = 3
             return RoutesService.deleteRoute(db, routeId)

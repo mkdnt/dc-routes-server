@@ -104,7 +104,7 @@ describe('Routes Endpoints', function() {
         })
     })
 
-    describe(`GET /api/route/:dc_area`, () => {
+    describe(`GET /api/route/byarea/:dc_area`, () => {
         context(`Given no routes in the specified DC area`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
@@ -126,7 +126,7 @@ describe('Routes Endpoints', function() {
             const dc_area = 'Northeast'
             const expectedRoutes = testRoutes.filter(route => route.dc_area == dc_area)
             return supertest(app)
-                .get(`/api/route/${dc_area}`)
+                .get(`/api/route/byarea/${dc_area}`)
                 .expect(200, expectedRoutes)
             })
         })
