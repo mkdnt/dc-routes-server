@@ -43,7 +43,7 @@ routeRouter
 routeRouter
     .route('/:dc_area')
     .get((req, res, next) => {
-        RoutesService.getByDcArea(req.app.get('db'))
+        RoutesService.getByDcArea(req.app.get('db'), req.params.dc_area)
         .then(routes => {
             res.json(routes)
         })

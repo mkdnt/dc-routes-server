@@ -103,9 +103,18 @@ describe('Routes Endpoints', function() {
             })
         })
     })
-/*
+
     describe(`GET /api/route/:dc_area`, () => {
-        const testRoutes = makeRoutesArray()
+        context(`Given no routes in the specified DC area`, () => {
+            it(`responds with 200 and an empty list`, () => {
+                return supertest(app)
+                    .get('/api/route')
+                    .expect(200, [])
+            })
+        })
+
+        context(`Given routes in the specified DC area`, () => {
+            const testRoutes = makeRoutesArray()
 
             beforeEach('insert routes', () => {
                 return db
@@ -119,9 +128,11 @@ describe('Routes Endpoints', function() {
             return supertest(app)
                 .get(`/api/route/${dc_area}`)
                 .expect(200, expectedRoutes)
+            })
         })
+        
     })
-*/
+
     describe(`POST /api/route`, () => {
         it(`creates a route, responding with 201 and the new route`, function() {
             const newRoute = {
