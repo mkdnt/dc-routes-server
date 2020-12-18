@@ -69,7 +69,7 @@ routeRouter
         })
         .catch(next)
     })    
-
+// byid/:route_id
 routeRouter
     .route('/:route_id')
     .all((req, res, next) => {
