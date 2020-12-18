@@ -21,6 +21,14 @@ const RoutesService = {
         return knex.from('routes').select('*').where('dc_area', dc_area)
     },
 
+    getByDifficulty(knex, difficulty) {
+        return knex.from('routes').select('*').where('difficulty', difficulty)
+    },
+
+    getByRouteType(knex, route_type) {
+            return knex.from('routes').select('*').where('route_type', route_type)
+        },
+
     deleteRoute(knex, id) {
         return knex('routes')
             .where({id})

@@ -51,6 +51,26 @@ routeRouter
     })
 
 routeRouter
+    .route('/bydifficulty/:difficulty')
+    .get((req, res, next) => {
+        RoutesService.getByDifficulty(req.app.get('db'), req.params.difficulty)
+        .then(routes => {
+            res.json(routes)
+        })
+        .catch(next)
+    })
+
+routeRouter
+    .route('/bytype/:route_type')
+    .get((req, res, next) => {
+        RoutesService.getByRouteType(req.app.get('db'), req.params.route_type)
+        .then(routes => {
+            res.json(routes)
+        })
+        .catch(next)
+    })    
+
+routeRouter
     .route('/:route_id')
     .all((req, res, next) => {
         RoutesService.getById(req.app.get('db'), req.params.route_id)

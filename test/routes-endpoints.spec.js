@@ -133,6 +133,62 @@ describe('Routes Endpoints', function() {
         
     })
 
+    describe(`GET /api/route/bydifficulty/:difficulty`, () => {
+        context(`Given no routes with the specified difficulty`, () => {
+            it(`responds with 200 and an empty list`, () => {
+                return supertest(app)
+                    .get('/api/route')
+                    .expect(200, [])
+            })
+        })
+
+        context(`Given routes with the specified difficulty`, () => {
+            const testRoutes = makeRoutesArray()
+
+            beforeEach('insert routes', () => {
+                return db
+                    .into('routes')
+                    .insert(testRoutes)
+            })
+
+        it(`responds with 200 and routes with the specified difficulty`, () => {
+            const difficulty = 'Medium'
+            const expectedRoutes = testRoutes.filter(route => route.difficulty == difficulty)
+            return supertest(app)
+                .get(`/api/route/bydifficulty/${difficulty}`)
+                .expect(200, expectedRoutes)
+            })    
+        })
+    })
+
+    describe(`GET /api/route/bytype/:route_type`, () => {
+        context(`Given no routes of the specified type`, () => {
+            it(`responds with 200 and an empty list`, () => {
+                return supertest(app)
+                    .get('/api/route')
+                    .expect(200, [])
+            })
+        })
+
+        context(`Given routes of the specified type`, () => {
+            const testRoutes = makeRoutesArray()
+
+            beforeEach('insert routes', () => {
+                return db
+                    .into('routes')
+                    .insert(testRoutes)
+            })
+
+        it(`responds with 200 and routes of the specified type`, () => {
+            const route_type = 'City Streets'
+            const expectedRoutes = testRoutes.filter(route => route.route_type == route_type)
+            return supertest(app)
+                .get(`/api/route/bytype/${route_type}`)
+                .expect(200, expectedRoutes)
+            })    
+        })
+    })
+
     describe(`POST /api/route`, () => {
         it(`creates a route, responding with 201 and the new route`, function() {
             const newRoute = {

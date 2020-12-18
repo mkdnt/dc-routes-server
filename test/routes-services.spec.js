@@ -86,6 +86,20 @@ describe(`Routes service object`, function() {
                 .then(actual => expect(actual).to.eql(expectedRoutes))
         })
 
+        it(`getByDifficulty() resolves a route by difficulty from 'routes' table`, () => {
+            const difficulty = 'Medium'
+            const expectedRoutes = testRoutes.filter(route => route.difficulty == difficulty)
+            return RoutesService.getByDifficulty(db, difficulty)
+                .then(actual => expect(actual).to.eql(expectedRoutes))
+        })
+
+        it(`getByRouteType() resolves a route by type from 'routes' table`, () => {
+            const route_type = 'City Streets'
+            const expectedRoutes = testRoutes.filter(route => route.route_type == route_type)
+            return RoutesService.getByRouteType(db, route_type)
+                .then(actual => expect(actual).to.eql(expectedRoutes))
+        })
+
         it(`deleteRoute() removes a route by id from 'routes table`, () => {
             const routeId = 3
             return RoutesService.deleteRoute(db, routeId)
