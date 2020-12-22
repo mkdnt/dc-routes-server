@@ -34,7 +34,7 @@ routeRouter
             .then(route => {
             res
                 .status(201)
-                .location(path.posix.join(req.originalUrl + `/${route.id}`))
+                .location(path.posix.join(req.originalUrl + `/byid/${route.id}`))
                 .json(route)
             })
             .catch(next)
@@ -45,6 +45,9 @@ routeRouter
     .get((req, res, next) => {
         RoutesService.getByDcArea(req.app.get('db'), req.params.dc_area)
         .then(routes => {
+            if (req.params.dc_area != 'Northeast' && req.params.dc_area != 'Southeast' && req.params.dc_area != 'Northwest' && req.params.dc_area != 'Southwest') {
+                return res.status(404).json({error: { message: `DC Area doesn't exist - must be Northeast, Southeast, Southwest, or Northwest`}})
+            }
             res.json(routes)
         })
         .catch(next)
@@ -55,6 +58,9 @@ routeRouter
     .get((req, res, next) => {
         RoutesService.getByDifficulty(req.app.get('db'), req.params.difficulty)
         .then(routes => {
+            if (req.params.difficulty != 'Low' && req.params.difficulty != 'Medium' && req.params.difficulty != 'High') {
+                return res.status(404).json({error: { message: `Difficulty doesn't exist - must be Low, Medium, or High` }})
+            }
             res.json(routes)
         })
         .catch(next)
@@ -65,13 +71,16 @@ routeRouter
     .get((req, res, next) => {
         RoutesService.getByRouteType(req.app.get('db'), req.params.route_type)
         .then(routes => {
+            if (req.params.route_type != 'City Streets' && req.params.route_type != 'Residential' && req.params.route_type != 'Trail/Path') {
+                return res.status(404).json({error: {message: `Type doesn't exist - must be City Streets, Residential, or Trail/Path` }})
+            }
             res.json(routes)
         })
         .catch(next)
     })    
-// byid/:route_id
+
 routeRouter
-    .route('/:route_id')
+    .route('/byid/:route_id')
     .all((req, res, next) => {
         RoutesService.getById(req.app.get('db'), req.params.route_id)
             .then(route => {

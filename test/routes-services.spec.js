@@ -32,6 +32,15 @@ describe(`Routes service object`, function() {
             difficulty: 'High',
             route_type: 'Trail/Path',
             route_description: 'Yet one more description to test...'
+        },
+        {
+            id: 4,
+            route_name: 'Test Route 4',
+            dc_area: 'Southwest',
+            distance: 10,
+            difficulty: 'High',
+            route_type: 'Trail/Path',
+            route_description: 'And one last(?) description...'
         }
     ]
 

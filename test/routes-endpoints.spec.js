@@ -47,12 +47,12 @@ describe('Routes Endpoints', function() {
         })
     })
 
-    describe(`GET /api/route/:route_id`, () => {
-        context(`Given no routes`, () => {
+    describe(`GET /api/route/byid/:route_id`, () => {
+        context(`Given no route with specified route_id`, () => {
             it(`responds with 404`, () => {
                 const routeId = 123456
                 return supertest(app)
-                    .get(`/api/route/${routeId}`)
+                    .get(`/api/route/byid/${routeId}`)
                     .expect(404, {error: {message: `Route doesn't exist`} })
             })
         })
@@ -70,7 +70,7 @@ describe('Routes Endpoints', function() {
                 const routeId = 2
                 const expectedRoute = testRoutes[routeId - 1]
                 return supertest(app)
-                    .get(`/api/route/${routeId}`)
+                    .get(`/api/route/byid/${routeId}`)
                     .expect(200, expectedRoute)
             })
         })
@@ -94,7 +94,7 @@ describe('Routes Endpoints', function() {
 
             it('removes XSS attack content', () => {
                 return supertest(app)
-                    .get(`/api/route/${maliciousRoute.id}`)
+                    .get(`/api/route/byid/${maliciousRoute.id}`)
                     .expect(200)
                     .expect(res => {
                         expect(res.body.route_name).to.eql(`Malicious attack from &lt;script&gt;alert("xss");&lt;/script&gt;`)
@@ -105,11 +105,21 @@ describe('Routes Endpoints', function() {
     })
 
     describe(`GET /api/route/byarea/:dc_area`, () => {
+        context(`Given specified dc_area is not one of four possibile DC areas`, () => {
+            it(`responds with 404`, () => {
+                const dc_area = 'Nonexistent'
+                return supertest(app)
+                    .get(`/api/route/byarea/${dc_area}`)
+                    .expect(404, {error: {message: `DC Area doesn't exist - must be Northeast, Southeast, Southwest, or Northwest`} })
+            })
+        })
+
         context(`Given no routes in the specified DC area`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
                     .get('/api/route')
                     .expect(200, [])
+                    //message with 'no routes in specified area'
             })
         })
 //message with 'no routes in specified area'
@@ -134,6 +144,15 @@ describe('Routes Endpoints', function() {
     })
 
     describe(`GET /api/route/bydifficulty/:difficulty`, () => {
+        context(`Given specified difficulty is not one of possible difficulties`, () => {
+            it(`responds with 404`, () => {
+                const difficulty = 'Nonexistent'
+                return supertest(app)
+                    .get(`/api/route/bydifficulty/${difficulty}`)
+                    .expect(404, {error: {message: `Difficulty doesn't exist - must be Low, Medium, or High`} })
+            })
+        })
+
         context(`Given no routes with the specified difficulty`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
@@ -162,6 +181,15 @@ describe('Routes Endpoints', function() {
     })
 
     describe(`GET /api/route/bytype/:route_type`, () => {
+        context(`Given specified type is not one of possible types`, () => {
+            it(`responds with 404`, () => {
+                const type = 'Nonexistent'
+                return supertest(app)
+                    .get(`/api/route/bytype/${type}`)
+                    .expect(404, {error: {message: `Type doesn't exist - must be City Streets, Residential, or Trail/Path`} })
+            })
+        })
+
         context(`Given no routes of the specified type`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
@@ -211,11 +239,11 @@ describe('Routes Endpoints', function() {
                     expect(res.body.route_type).to.eql(newRoute.route_type)
                     expect(res.body.route_description).to.eql(newRoute.route_description)
                     expect(res.body).to.have.property('id')
-                    expect(res.headers.location).to.eql(`/api/route/${res.body.id}`)
+                    expect(res.headers.location).to.eql(`/api/route/byid/${res.body.id}`)
                 })
                 .then(postRes => 
                     supertest(app)
-                        .get(`/api/route/${postRes.body.id}`)
+                        .get(`/api/route/byid/${postRes.body.id}`)
                         .expect(postRes.body)
                     )
         })
@@ -247,12 +275,12 @@ describe('Routes Endpoints', function() {
         
     })
 
-    describe(`DELETE /api/route/:route_id`, () => {
+    describe(`DELETE /api/route/byid/:route_id`, () => {
         context('Given no route', () => {
             it(`responds with 404`, () => {
                 const routeId = 123456
                 return supertest(app)
-                    .delete(`/api/route/${routeId}`)
+                    .delete(`/api/route/byid/${routeId}`)
                     .expect(404, {error: {message: `Route doesn't exist`} })
             })
         })
@@ -270,23 +298,23 @@ describe('Routes Endpoints', function() {
                 const idToRemove = 2
                 const expectedRoutes = testRoutes.filter(route => route.id !== idToRemove)
                 return supertest(app)
-                    .delete(`/api/route/${idToRemove}`)
+                    .delete(`/api/route/byid/${idToRemove}`)
                     .expect(204)
                     .then(res =>
                         supertest(app)
-                        .get('/api/route')
+                        .get('/api/route/')
                         .expect(expectedRoutes)
                     )
             })
         })
     })
 
-    describe(`PATCH /api/route/:route_id`, () => {
+    describe(`PATCH /api/route/byid/:route_id`, () => {
         context('Given no route', () => {
             it('responds with 404', () => {
                 const routeId = 123456
                 return supertest(app)
-                    .patch(`/api/route/${routeId}`)
+                    .patch(`/api/route/byid/${routeId}`)
                     .expect(404, {error: {message: `Route doesn't exist`}})
             })
         })
@@ -315,12 +343,12 @@ describe('Routes Endpoints', function() {
                     ...updateRoute
                 }
                 return supertest(app)
-                    .patch(`/api/route/${idToUpdate}`)
+                    .patch(`/api/route/byid/${idToUpdate}`)
                     .send(updateRoute)
                     .expect(204)
                     .then(res => 
                         supertest(app)
-                            .get(`/api/route/${idToUpdate}`)
+                            .get(`/api/route/byid/${idToUpdate}`)
                             .expect(expectedRoute)
                     )
             })
@@ -328,7 +356,7 @@ describe('Routes Endpoints', function() {
             it('responds with 400 when no required fields are supplied', () => {
                 const idToUpdate = 2
                 return supertest(app)
-                    .patch(`/api/route/${idToUpdate}`)
+                    .patch(`/api/route/byid/${idToUpdate}`)
                     .send({irrelevantField: 'foo'})
                     .expect(400, { error: {message: `Request body must contain route name, DC area, distance, difficulty, route type, or description`}})
             })
@@ -343,7 +371,7 @@ describe('Routes Endpoints', function() {
                     ...updateRoute
                 }
                 return supertest(app)
-                    .patch(`/api/route/${idToUpdate}`)
+                    .patch(`/api/route/byid/${idToUpdate}`)
                     .send({
                         ...updateRoute,
                         fieldToIgnore: 'should not be in GET response'
@@ -351,7 +379,7 @@ describe('Routes Endpoints', function() {
                     .expect(204)
                     .then(res =>
                         supertest(app)
-                        .get(`/api/route/${idToUpdate}`)
+                        .get(`/api/route/byid/${idToUpdate}`)
                         .expect(expectedRoute)    
                     )
             })
