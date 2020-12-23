@@ -16,8 +16,8 @@ routeRouter
         .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const {route_name, dc_area, distance, difficulty, route_type, route_description} = req.body
-        const newRoute = {route_name, dc_area, distance, difficulty, route_type, route_description}
+        const {route_name, dc_area, distance, difficulty, route_type, route_description, editable} = req.body
+        const newRoute = {route_name, dc_area, distance, difficulty, route_type, route_description, editable}
 
         for (const [key, value] of Object.entries(newRoute)) {
             if (value == null) {
@@ -80,9 +80,9 @@ routeRouter
     })    
 
 routeRouter
-    .route('/byid/:route_id')
+    .route('/byid/:routeId')
     .all((req, res, next) => {
-        RoutesService.getById(req.app.get('db'), req.params.route_id)
+        RoutesService.getById(req.app.get('db'), req.params.id)
             .then(route => {
             if (!route) {
                 return res.status(404).json({
@@ -102,22 +102,21 @@ routeRouter
                 distance: res.route.distance,
                 difficulty: res.route.difficulty,
                 route_type: res.route.route_type,
-                route_description: xss(res.route.route_description)
+                route_description: xss(res.route.route_description),
+                editable: res.route.editable
         })
     })        
     .delete((req, res, next) => {
-        RoutesService.deleteRoute(
-            req.app.get('db'),
-            req.params.route_id
-        )
+        RoutesService.deleteRoute(req.app.get('db'), req.params.id)
+        
             .then(() => {
                 res.status(204).end()
             })
             .catch(next)
     })
     .patch(jsonParser, (req, res, next) => {
-        const {route_name, dc_area, distance, difficulty, route_type, route_description} = req.body
-        const routeToUpdate = {route_name, dc_area, distance, difficulty, route_type, route_description}
+        const {route_name, dc_area, distance, difficulty, route_type, route_description, editable} = req.body
+        const routeToUpdate = {route_name, dc_area, distance, difficulty, route_type, route_description, editable}
 
         const numberOfValues = Object.values(routeToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
@@ -128,7 +127,7 @@ routeRouter
 
         RoutesService.updateRoute(
             req.app.get('db'),
-            req.params.route_id,
+            req.params.id,
             routeToUpdate
         )
             .then(numRowsAffected => {

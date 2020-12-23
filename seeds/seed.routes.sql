@@ -1,4 +1,4 @@
-insert into routes (route_name, dc_area, distance, difficulty, route_type, route_description)
+insert into routes (route_name, dc_area, distance, difficulty, route_type, route_description, editable)
 VALUES
-('Anacostia River Out and Back', 'Southeast', 4, 'Low', 'Trail/Path', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque?'),
-('Capitol Tour', 'Northeast', 6, 'Medium', 'City Streets', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, exercitationem cupiditate dignissimos est perspiciatis, nobis commodi alias saepe atque facilis labore sequi deleniti. Sint, adipisci facere! Velit temporibus debitis rerum.');
+('Anacostia River Out and Back', 'Southeast', 4, 'Low', 'Trail/Path', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque?', false),
+('Capitol Tour', 'Northeast', 6, 'Medium', 'City Streets', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, exercitationem cupiditate dignissimos est perspiciatis, nobis commodi alias saepe atque facilis labore sequi deleniti. Sint, adipisci facere! Velit temporibus debitis rerum.', false);

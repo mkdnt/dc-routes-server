@@ -30,9 +30,7 @@ const RoutesService = {
         },
 
     deleteRoute(knex, id) {
-        return knex('routes')
-            .where({id})
-            .delete()
+        return knex('routes').where({id}).delete()
     },
 
     updateRoute(knex, id, newRouteFields) {
