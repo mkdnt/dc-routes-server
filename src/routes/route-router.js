@@ -82,7 +82,7 @@ routeRouter
 routeRouter
     .route('/byid/:routeId')
     .all((req, res, next) => {
-        RoutesService.getById(req.app.get('db'), req.params.id)
+        RoutesService.getById(req.app.get('db'), req.params.routeId)
             .then(route => {
             if (!route) {
                 return res.status(404).json({
@@ -107,8 +107,7 @@ routeRouter
         })
     })        
     .delete((req, res, next) => {
-        RoutesService.deleteRoute(req.app.get('db'), req.params.id)
-        
+        RoutesService.deleteRoute(req.app.get('db'), req.params.routeId)      
             .then(() => {
                 res.status(204).end()
             })
@@ -127,7 +126,7 @@ routeRouter
 
         RoutesService.updateRoute(
             req.app.get('db'),
-            req.params.id,
+            req.params.routeId,
             routeToUpdate
         )
             .then(numRowsAffected => {
