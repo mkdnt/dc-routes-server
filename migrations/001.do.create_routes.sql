@@ -5,5 +5,5 @@ CREATE TABLE routes (
     distance integer not null,
     difficulty text not null,
     route_type text not null,
-    route_description text not null,
+    route_description text not null
 );

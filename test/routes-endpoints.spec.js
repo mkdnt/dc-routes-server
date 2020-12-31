@@ -226,7 +226,6 @@ describe('Routes Endpoints', function() {
                 difficulty: 'High',
                 route_type: 'Trail/Path',
                 route_description: 'Route description to test...',
-                editable: false
             }
             return supertest(app)
                 .post('/api/route')
@@ -239,7 +238,6 @@ describe('Routes Endpoints', function() {
                     expect(res.body.difficulty).to.eql(newRoute.difficulty)
                     expect(res.body.route_type).to.eql(newRoute.route_type)
                     expect(res.body.route_description).to.eql(newRoute.route_description)
-                    expect(res.body.editable).to.eql(newRoute.editable)
                     expect(res.body).to.have.property('id')
                     expect(res.headers.location).to.eql(`/api/route/byid/${res.body.id}`)
                 })
@@ -250,7 +248,7 @@ describe('Routes Endpoints', function() {
                     )
         })
 
-        const requiredFields = ['route_name', 'dc_area', 'distance', 'difficulty', 'route_type', 'route_description', 'editable']
+        const requiredFields = ['route_name', 'dc_area', 'distance', 'difficulty', 'route_type', 'route_description']
 
         requiredFields.forEach(field => {
             const newRoute = {
@@ -260,7 +258,6 @@ describe('Routes Endpoints', function() {
                 difficulty: 'High',
                 route_type: 'Trail/Path',
                 route_description: 'Route description to test...',
-                editable: false
             }
 
             it(`responds with 400 and an error message when the '${field}' is missing`, () => {
@@ -340,7 +337,6 @@ describe('Routes Endpoints', function() {
                     difficulty: 'High',
                     route_type: 'Trail/Path',
                     route_description: 'Route description to update...',
-                    editable: false
                 }
                 const expectedRoute = {
                     ...testRoutes[idToUpdate -1],

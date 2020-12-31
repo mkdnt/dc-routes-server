@@ -14,7 +14,6 @@ describe(`Routes service object`, function() {
             difficulty: 'Medium',
             route_type: 'City Streets',
             route_description: 'Describing what the route is like to run along.',
-            editable: false
         },
         {
             id: 2,
@@ -24,7 +23,6 @@ describe(`Routes service object`, function() {
             difficulty: 'Low',
             route_type: 'Residential',
             route_description: 'This is the second test route.',
-            editable: false
         },
         {
             id: 3,
@@ -34,7 +32,6 @@ describe(`Routes service object`, function() {
             difficulty: 'High',
             route_type: 'Trail/Path',
             route_description: 'Yet one more description to test...',
-            editable: false
         },
         {
             id: 4,
@@ -44,7 +41,6 @@ describe(`Routes service object`, function() {
             difficulty: 'High',
             route_type: 'Trail/Path',
             route_description: 'And one last(?) description...',
-            editable: false
         }
     ]
 
@@ -88,7 +84,6 @@ describe(`Routes service object`, function() {
                         difficulty: thirdTestRoute.difficulty,
                         route_type: thirdTestRoute.route_type,
                         route_description: thirdTestRoute.route_description,
-                        editable: thirdTestRoute.editable
                     })
                 })
         })
@@ -133,7 +128,6 @@ describe(`Routes service object`, function() {
                 difficulty: 'High',
                 route_type: 'Trail/Path',
                 route_description: 'Updated route description...',
-                editable: false
             }
             return RoutesService.updateRoute(db, idOfRouteToUpdate, newRouteData)
                 .then(() => RoutesService.getById(db, idOfRouteToUpdate))
@@ -162,7 +156,6 @@ describe(`Routes service object`, function() {
             difficulty: 'High',
             route_type: 'Trail/Path',
             route_description: 'Testing new route...',
-            editable: false
             }
             return RoutesService.insertRoute(db, newRoute)
                 .then(actual => {
@@ -174,7 +167,6 @@ describe(`Routes service object`, function() {
                         difficulty: newRoute.difficulty,
                         route_type: newRoute.route_type,
                         route_description: newRoute.route_description,
-                        editable: newRoute.editable
                     })
                 })
         })

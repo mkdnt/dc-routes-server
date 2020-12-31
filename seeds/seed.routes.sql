@@ -1,4 +1,4 @@
-insert into routes (route_name, dc_area, distance, difficulty, route_type, route_description, editable)
+insert into routes (route_name, dc_area, distance, difficulty, route_type, route_description)
 VALUES
 ('Anacostia River Out and Back', 'Southeast', 4, 'Low', 'Trail/Path', 'Run out and back along the Anacostia River. Beginning at the riverwalk where it meets Benning Rd NE, go south along the path until you reach Pennsylvania Ave SE.'),
 ('Capitol Tour', 'Northeast', 6, 'Medium', 'City Streets', 'Beginning at the northeast corner of the US Capitol, run along Constitution Avenue, taking in landmarks along the National Mall, such as the Washington Monument, WWII Memorial, and various Smithsonian Museums. At the midpoint on 23rd St NW, there is a steep hill, which increases the difficulty of an otherwise flat run. After that, K Street will let you see the financial and business hub of DC as you make your wake back to your starting point.'),

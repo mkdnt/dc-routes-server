@@ -8,7 +8,6 @@ function makeRoutesArray() {
             difficulty: 'Medium',
             route_type: 'City Streets',
             route_description: 'Describing what the route is like to run along.',
-            editable: false
         },
         {
             id: 2,
@@ -18,7 +17,6 @@ function makeRoutesArray() {
             difficulty: 'Low',
             route_type: 'Residential',
             route_description: 'This is the second test route.',
-            editable: false
         },
         {
             id: 3,
@@ -28,7 +26,6 @@ function makeRoutesArray() {
             difficulty: 'High',
             route_type: 'Trail/Path',
             route_description: 'Yet one more description to test...',
-            editable: false
         },
         {
             id: 4,
@@ -38,7 +35,6 @@ function makeRoutesArray() {
             difficulty: 'High',
             route_type: 'Trail/Path',
             route_description: 'And one last(?) description...',
-            editable: false
         }
         ];
 }

@@ -16,8 +16,8 @@ routeRouter
         .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const {route_name, dc_area, distance, difficulty, route_type, route_description, editable} = req.body
-        const newRoute = {route_name, dc_area, distance, difficulty, route_type, route_description, editable}
+        const {route_name, dc_area, distance, difficulty, route_type, route_description} = req.body
+        const newRoute = {route_name, dc_area, distance, difficulty, route_type, route_description}
 
         for (const [key, value] of Object.entries(newRoute)) {
             if (value == null) {
@@ -103,7 +103,6 @@ routeRouter
                 difficulty: res.route.difficulty,
                 route_type: res.route.route_type,
                 route_description: xss(res.route.route_description),
-                editable: res.route.editable
         })
     })        
     .delete((req, res, next) => {
@@ -114,8 +113,8 @@ routeRouter
             .catch(next)
     })
     .patch(jsonParser, (req, res, next) => {
-        const {route_name, dc_area, distance, difficulty, route_type, route_description, editable} = req.body
-        const routeToUpdate = {route_name, dc_area, distance, difficulty, route_type, route_description, editable}
+        const {route_name, dc_area, distance, difficulty, route_type, route_description} = req.body
+        const routeToUpdate = {route_name, dc_area, distance, difficulty, route_type, route_description}
 
         const numberOfValues = Object.values(routeToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
