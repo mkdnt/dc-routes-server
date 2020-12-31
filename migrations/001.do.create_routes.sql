@@ -6,5 +6,4 @@ CREATE TABLE routes (
     difficulty text not null,
     route_type text not null,
     route_description text not null,
-    editable boolean
 );
