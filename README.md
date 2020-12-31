@@ -1,35 +1,10 @@
-# EXPRESS BOILERPLATE
+# DC Routes
 
-### Get your Express project up and running easily with this boilerplate
+## Server
 
----
+<p>This app offers various running routes in the Washington, DC, area. Choose which part of DC you want to run in, how far you want to run, or what type of route you want to run. You can also add your own routes to the list to help expand our database of DC running routes.</p>
 
-## Set up
+## [DC Routes](https://dc-routes-client.vercel.app/)
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME) with starter packages, folders and files:
-
-1. Clone this repository to your local machine `git clone https://github.com/jenna-chestnut/express-boilerplate.git NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
-
----
-
-## Scripts
-
-Start the application `npm start`
-
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-Run a watching test environment `npm run watch`
-
----
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`.  
-This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+<img align='center' src='https://mkdnt.github.io/dc-routes-client/readme_images/list.jpeg' />
+<img align='center' src='readme_images/route.jpeg' />
